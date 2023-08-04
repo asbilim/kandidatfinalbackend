@@ -10,7 +10,7 @@ class UserCreation(ModelViewSet):
 
     serializer_class = UserSerializer
     queryset = get_user_model().objects.all()
-
+    #none sense
     def create(self,request):
 
         username = request.data['username']

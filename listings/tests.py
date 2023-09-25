@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
+import requests
 
 class UserCreationTest(APITestCase):
     def setUp(self):
@@ -25,3 +26,30 @@ class UserCreationTest(APITestCase):
         self.assertEqual(response.data['status'], 'error')
         self.assertEqual(response.data['content'], 'An error occurred while creating the user!')
         self.assertFalse(get_user_model().objects.filter(username='').exists())
+
+
+
+
+class JWTAuthTestCase(APITestCase):
+
+    def setUp(self):
+        self.url = reverse('jwt-create')
+    
+    def test_jwt_create(self):
+        # Endpoint URL
+        self.url = reverse('user-create-list')
+
+        # Test credentials (assuming you've created a user with these credentials)
+        data = {
+            'username': 'testuser',
+            'password': 'testpassword'
+        }
+
+        response = requests.post(self.url, data=data)
+        
+        # Assert the status code (should be 200 OK for successful JWT creation)
+        self.assertEqual(response.status_code, 200)
+
+        # Assert that the response contains a token
+        self.assertIn('access', response.json())
+        self.assertIn('refresh', response.json())

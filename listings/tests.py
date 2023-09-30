@@ -36,16 +36,17 @@ class JWTAuthTestCase(APITestCase):
         self.url = reverse('jwt-create')
     
     def test_jwt_create(self):
-        # Endpoint URL
-        self.url = reverse('user-create-list')
+      
 
         # Test credentials (assuming you've created a user with these credentials)
         data = {
-            'username': 'testuser',
-            'password': 'testpassword'
+            'username': 'admin',
+            'password': 'admin'
         }
 
-        response = requests.post(self.url, data=data)
+        response = self.client.post(self.url, data=data)
+
+        print(response.json())
         
         # Assert the status code (should be 200 OK for successful JWT creation)
         self.assertEqual(response.status_code, 200)

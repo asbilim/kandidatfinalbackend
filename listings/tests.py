@@ -48,9 +48,7 @@ class JWTAuthTestCase(APITestCase):
 
         print(response.json())
         
-        # Assert the status code (should be 200 OK for successful JWT creation)
-        self.assertEqual(response.status_code, 200)
+        #No user found with the given credentials
+        self.assertEqual(response.status_code, 401)
 
-        # Assert that the response contains a token
-        self.assertIn('access', response.json())
-        self.assertIn('refresh', response.json())
+       

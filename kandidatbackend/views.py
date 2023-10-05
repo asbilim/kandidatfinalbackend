@@ -20,6 +20,7 @@ class UserCreation(ModelViewSet):
 
             user = get_user_model().objects.create(username=username, password=password)
             user.set_password(password)  #this line of code is to insure the password is saved 
+            user.save()
             
             return Response(status=status.HTTP_201_CREATED,data={'status':'success','content':'user created successfully'})
         
